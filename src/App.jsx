@@ -19,7 +19,7 @@ function App() {
     "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
   });
 
-  /* ================= FETCH BACKEND ================= */
+  /* ================= FETCH BACKEND (FIXED) ================= */
   useEffect(() => {
     if (!isLoggedIn) return;
 
@@ -28,39 +28,18 @@ function App() {
       .then((data) => {
         const updated = { ...machineInputs };
 
-        /* ---------- CFT ---------- */
-        ["CFT-1", "CFT-2", "CFT-3"].forEach((k) => {
-          if (!data[k]) return;
-          updated[k] = {
-            ...updated[k],
-            wheelCode: data[k].wheelCode || "",
-            wheelSize: data[k].wheelSize || "",
-            testReason: data[k].testReason || "",
-            load: data[k].bendingMovement || "",
-          };
-        });
+        Object.keys(updated).forEach((machine) => {
+          if (!data[machine]) return;
 
-        /* ---------- BI AXIAL ---------- */
-        ["BI AXIAL-CV", "BI AXIAL-LP"].forEach((k) => {
-          if (!data[k]) return;
-          updated[k] = {
-            ...updated[k],
-            wheelCode: data[k].wheelCode || "",
-            wheelSize: data[k].wheelSize || "",
-            testReason: data[k].testReason || "",
-            load: data[k].testLoad || "",
-          };
-        });
-
-        /* ---------- RFT (FIXED – DIRECT KEYS) ---------- */
-        ["RFT-1&2", "RFT-3&4", "RFT-5&6"].forEach((k) => {
-          if (!data[k]) return;
-          updated[k] = {
-            ...updated[k],
-            wheelCode: data[k].wheelCode || "",
-            wheelSize: data[k].wheelSize || "",
-            testReason: data[k].testReason || "",
-            load: data[k].testLoad || "",
+          updated[machine] = {
+            ...updated[machine],
+            wheelCode: data[machine].wheelCode || "",
+            wheelSize: data[machine].wheelSize || "",
+            testReason: data[machine].testReason || "",
+            load:
+              data[machine].bendingMovement ??
+              data[machine].testLoad ??
+              "",
           };
         });
 
@@ -91,7 +70,7 @@ function App() {
     },
   ];
 
-  /* ================= LOGIN HANDLERS ================= */
+  /* ================= LOGIN ================= */
   const login = (e) => {
     e.preventDefault();
     if (username === "wil" && password === "123456") {
@@ -108,7 +87,6 @@ function App() {
     setPassword("");
   };
 
-  /* ================= LOGIN PAGE ================= */
   if (!isLoggedIn) {
     return (
       <div style={styles.loginPage}>
