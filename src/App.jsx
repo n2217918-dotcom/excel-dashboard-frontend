@@ -12,14 +12,19 @@ function App() {
     "CFT-1": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
     "CFT-2": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
     "CFT-3": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-1&2": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-3&4": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-5&6": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+
+    "RFT-1": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "RFT-2": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "RFT-3": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "RFT-4": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "RFT-5": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "RFT-6": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+
     "BI AXIAL-CV": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
     "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
   });
 
-  /* ================= FETCH BACKEND (FIXED) ================= */
+  /* ================= FETCH BACKEND ================= */
   useEffect(() => {
     if (!isLoggedIn) return;
 
@@ -50,12 +55,22 @@ function App() {
 
   /* ================= MACHINE CONFIG ================= */
   const machines = [
+    // -------- ROW 1 --------
     { name: "CFT-1", type: "CFT", sub: "10 KN", img: "/images/cft1_2.png" },
     { name: "CFT-2", type: "CFT", sub: "60 KN", img: "/images/cft1_2.png" },
     { name: "CFT-3", type: "CFT", sub: "105 KN", img: "/images/cft3.png" },
-    { name: "RFT-1&2", type: "RFT", sub: "3 TON", img: "/images/rft1_2.png" },
-    { name: "RFT-3&4", type: "RFT", sub: "10 TON", img: "/images/rft3_4.png" },
-    { name: "RFT-5&6", type: "RFT", sub: "10 & 15 TON", img: "/images/rft5_6.png" },
+
+    // -------- ROW 2 --------
+    { name: "RFT-1", type: "RFT", sub: "3 TON", img: "/images/rft1_2.png" },
+    { name: "RFT-2", type: "RFT", sub: "3 TON", img: "/images/rft1_2.png" },
+    { name: "RFT-3", type: "RFT", sub: "10 TON", img: "/images/rft3_4.png" },
+
+    // -------- ROW 3 --------
+    { name: "RFT-4", type: "RFT", sub: "10 TON", img: "/images/rft3_4.png" },
+    { name: "RFT-5", type: "RFT", sub: "10 & 15 TON", img: "/images/rft5_6.png" },
+    { name: "RFT-6", type: "RFT", sub: "10 & 15 TON", img: "/images/rft5_6.png" },
+
+    // -------- ROW 4 --------
     {
       name: "BI AXIAL-CV",
       type: "BIAXIAL",
@@ -166,7 +181,7 @@ function App() {
   );
 }
 
-/* ================= STYLES ================= */
+/* ================= STYLES (UNCHANGED) ================= */
 const styles = {
   loginPage: {
     minHeight: "100vh",
