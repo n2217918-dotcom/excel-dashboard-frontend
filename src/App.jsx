@@ -88,7 +88,7 @@ function App() {
   /* ================= LOGIN ================= */
   const login = (e) => {
     e.preventDefault();
-    if (username === "wil" && password === "123456") {
+    if (username === "wil" && password === "WH#ee@LS&") {
       setIsLoggedIn(true);
       setError("");
     } else {
