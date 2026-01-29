@@ -37,15 +37,17 @@ function App() {
           if (!data[machine]) return;
 
           updated[machine] = {
-            ...updated[machine],
-            wheelCode: data[machine].wheelCode || "",
-            wheelSize: data[machine].wheelSize || "",
-            testReason: data[machine].testReason || "",
-            load:
-              data[machine].bendingMovement ??
-              data[machine].testLoad ??
-              "",
-          };
+  ...updated[machine],
+  wheelCode: data[machine].wheelCode || "",
+  wheelSize: data[machine].wheelSize || "",
+  cycles: data[machine].cycles || "",   // ✅ ADD THIS LINE
+  testReason: data[machine].testReason || "",
+  load:
+    data[machine].bendingMovement ??
+    data[machine].testLoad ??
+    "",
+};
+
         });
 
         setMachineInputs(updated);
