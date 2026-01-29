@@ -37,17 +37,16 @@ function App() {
           if (!data[machine]) return;
 
           updated[machine] = {
-  ...updated[machine],
-  wheelCode: data[machine].wheelCode || "",
-  wheelSize: data[machine].wheelSize || "",
-  cycles: data[machine].cycles || "",   // ✅ ADD THIS LINE
-  testReason: data[machine].testReason || "",
-  load:
-    data[machine].bendingMovement ??
-    data[machine].testLoad ??
-    "",
-};
-
+            ...updated[machine],
+            wheelCode: data[machine].wheelCode || "",
+            wheelSize: data[machine].wheelSize || "",
+            cycles: data[machine].cycles || "",
+            testReason: data[machine].testReason || "",
+            load:
+              data[machine].bendingMovement ??
+              data[machine].testLoad ??
+              "",
+          };
         });
 
         setMachineInputs(updated);
@@ -57,22 +56,18 @@ function App() {
 
   /* ================= MACHINE CONFIG ================= */
   const machines = [
-    // -------- ROW 1 --------
     { name: "CFT-1", type: "CFT", sub: "10 KN", img: "/images/cft1_2.png" },
     { name: "CFT-2", type: "CFT", sub: "60 KN", img: "/images/cft1_2.png" },
     { name: "CFT-3", type: "CFT", sub: "105 KN", img: "/images/cft3.png" },
 
-    // -------- ROW 2 --------
     { name: "RFT-1", type: "RFT", sub: "3 TON", img: "/images/rft1_2.png" },
     { name: "RFT-2", type: "RFT", sub: "3 TON", img: "/images/rft1_2.png" },
     { name: "RFT-3", type: "RFT", sub: "10 TON", img: "/images/rft3_4.png" },
 
-    // -------- ROW 3 --------
     { name: "RFT-4", type: "RFT", sub: "10 TON", img: "/images/rft3_4.png" },
     { name: "RFT-5", type: "RFT", sub: "10 & 15 TON", img: "/images/rft5_6.png" },
     { name: "RFT-6", type: "RFT", sub: "10 & 15 TON", img: "/images/rft5_6.png" },
 
-    // -------- ROW 4 --------
     {
       name: "BI AXIAL-CV",
       type: "BIAXIAL",
@@ -137,6 +132,9 @@ function App() {
         <button style={styles.logoutBtn} onClick={logout}>Logout</button>
       </div>
 
+      {/* ✅ NEW CENTER HEADING */}
+      <div style={styles.pageTitle}>PRODUCT TESTING</div>
+
       <div style={styles.grid}>
         {machines.map((m) => {
           const loadLabel = m.type === "CFT" ? "Bending Movement" : "Test Load";
@@ -146,9 +144,10 @@ function App() {
               <div style={styles.titleBlock}>
                 <div style={styles.machineName}>{m.name}</div>
                 {m.sub && <div style={styles.sub}>{m.sub}</div>}
-                {m.subLines && m.subLines.map((s) => (
-                  <div key={s} style={styles.sub}>{s}</div>
-                ))}
+                {m.subLines &&
+                  m.subLines.map((s) => (
+                    <div key={s} style={styles.sub}>{s}</div>
+                  ))}
               </div>
 
               <div style={styles.alignRow}>
@@ -183,7 +182,7 @@ function App() {
   );
 }
 
-/* ================= STYLES (UNCHANGED) ================= */
+/* ================= STYLES ================= */
 const styles = {
   loginPage: {
     minHeight: "100vh",
@@ -219,7 +218,7 @@ const styles = {
     fontWeight: 600,
   },
   dashboard: { padding: 20 },
-  header: { display: "flex", justifyContent: "space-between", marginBottom: 20 },
+  header: { display: "flex", justifyContent: "space-between", marginBottom: 10 },
   logoutBtn: {
     background: "#ef4444",
     color: "white",
@@ -227,6 +226,15 @@ const styles = {
     padding: "8px 14px",
     borderRadius: 6,
   },
+
+  /* ✅ NEW */
+  pageTitle: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    marginBottom: 20,
+  },
+
   grid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 },
   card: {
     background: "white",
@@ -234,7 +242,7 @@ const styles = {
     borderRadius: 14,
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
   },
-  titleBlock: { marginBottom: 6 },
+  titleBlock: { marginBottom: 6, textAlign: "center" },
   alignRow: { display: "flex", gap: 18 },
   left: { width: 140 },
   image: { width: 130, height: "100%", objectFit: "cover", borderRadius: 6 },
@@ -242,8 +250,10 @@ const styles = {
   row: { display: "flex", alignItems: "center", marginBottom: 6 },
   label: { width: 120, fontSize: 12 },
   input: { width: 150, padding: 6, fontSize: 12 },
-  machineName: { fontWeight: "bold", fontSize: 13 },
-  sub: { fontSize: 11, color: "#2563eb" },
+
+  /* ✅ 10% increased */
+  machineName: { fontWeight: "bold", fontSize: 14.3, textAlign: "center" },
+  sub: { fontSize: 12.1, color: "#2563eb", textAlign: "center" },
 };
 
 export default App;
