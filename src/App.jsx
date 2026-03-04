@@ -9,19 +9,19 @@ function App() {
 
   /* ================= MACHINE STATE ================= */
   const [machineInputs, setMachineInputs] = useState({
-    "CFT-1": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "CFT-2": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "CFT-3": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "CFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "CFT-2": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "CFT-3": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
 
-    "RFT-1": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-2": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-3": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-4": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-5": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "RFT-6": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "RFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "RFT-2": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "RFT-3": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "RFT-4": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "RFT-5": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "RFT-6": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
 
-    "BI AXIAL-CV": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
-    "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", load: "", testReason: "" },
+    "BI AXIAL-CV": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
   });
 
   /* ================= FETCH BACKEND ================= */
@@ -41,6 +41,7 @@ function App() {
             wheelCode: data[machine].wheelCode || "",
             wheelSize: data[machine].wheelSize || "",
             cycles: data[machine].cycles || "",
+            acceptedCycles: data[machine].acceptedCycles || "",
             testReason: data[machine].testReason || "",
             load:
               data[machine].bendingMovement ??
@@ -170,6 +171,7 @@ function App() {
                     { key: "wheelCode", label: "Wheel Code" },
                     { key: "wheelSize", label: "Wheel Size" },
                     { key: "cycles", label: "No of Cycles" },
+                    { key: "acceptedCycles", label: "Accepted Cycles" },
                     { key: "load", label: loadLabel },
                     { key: "testReason", label: "Test Reason" },
                   ].map((f) => (
