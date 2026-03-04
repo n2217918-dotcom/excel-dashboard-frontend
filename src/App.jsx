@@ -99,6 +99,15 @@ function App() {
     setPassword("");
   };
 
+  /* ================= DATE ================= */
+
+  const today = new Date();
+
+  const formattedDate =
+    String(today.getDate()).padStart(2, "0") + "/" +
+    String(today.getMonth() + 1).padStart(2, "0") + "/" +
+    String(today.getFullYear()).slice(-2);
+
   if (!isLoggedIn) {
     return (
       <div style={styles.loginPage}>
@@ -132,8 +141,9 @@ function App() {
         <button style={styles.logoutBtn} onClick={logout}>Logout</button>
       </div>
 
-      {/* ✅ NEW CENTER HEADING */}
-      <div style={styles.pageTitle}>PRODUCT TESTING LIVE DATA - </div>
+      <div style={styles.pageTitle}>
+        PRODUCT TESTING LIVE DATA - {formattedDate}
+      </div>
 
       <div style={styles.grid}>
         {machines.map((m) => {
@@ -226,15 +236,12 @@ const styles = {
     padding: "8px 14px",
     borderRadius: 6,
   },
-
-  /* ✅ NEW */
   pageTitle: {
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 20,
   },
-
   grid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 },
   card: {
     background: "white",
@@ -250,8 +257,6 @@ const styles = {
   row: { display: "flex", alignItems: "center", marginBottom: 6 },
   label: { width: 120, fontSize: 12 },
   input: { width: 150, padding: 6, fontSize: 12 },
-
-  /* ✅ 10% increased */
   machineName: { fontWeight: "bold", fontSize: 14.3, textAlign: "center" },
   sub: { fontSize: 12.1, color: "#2563eb", textAlign: "center" },
 };
