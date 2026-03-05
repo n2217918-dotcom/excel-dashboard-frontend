@@ -9,19 +9,19 @@ function App() {
 
   /* ================= MACHINE STATE ================= */
   const [machineInputs, setMachineInputs] = useState({
-    "CFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "CFT-2": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "CFT-3": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "CFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "CFT-2": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "CFT-3": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
 
-    "RFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "RFT-2": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "RFT-3": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "RFT-4": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "RFT-5": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "RFT-6": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "RFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "RFT-2": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "RFT-3": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "RFT-4": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "RFT-5": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "RFT-6": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
 
-    "BI AXIAL-CV": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
-    "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", acceptedCycles: "", load: "", testReason: "" },
+    "BI AXIAL-CV": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
+    "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
   });
 
   /* ================= FETCH BACKEND ================= */
@@ -171,7 +171,7 @@ function App() {
                     { key: "wheelCode", label: "Wheel Code" },
                     { key: "wheelSize", label: "Wheel Size" },
                     { key: "cycles", label: "No of Cycles" },
-                    { key: "acceptedCycles", label: "Accepted Cycles" },
+                    { key: "acceptance Cycles", label: "Acceptance Cycles" },
                     { key: "load", label: loadLabel },
                     { key: "testReason", label: "Test Reason" },
                   ].map((f) => (
@@ -258,7 +258,7 @@ const styles = {
   form: { flex: 1 },
   row: { display: "flex", alignItems: "center", marginBottom: 6 },
   label: { width: 120, fontSize: 12 },
-  input: { width: 150, padding: 6, fontSize: 12 },
+  input: { width: 150, padding: 6, fontSize: 13.8 },
   machineName: { fontWeight: "bold", fontSize: 14.3, textAlign: "center" },
   sub: { fontSize: 12.1, color: "#2563eb", textAlign: "center" },
 };
