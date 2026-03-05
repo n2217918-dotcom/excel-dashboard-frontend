@@ -41,7 +41,7 @@ function App() {
             wheelCode: data[machine].wheelCode || "",
             wheelSize: data[machine].wheelSize || "",
             cycles: data[machine].cycles || "",
-            acceptedCycles: data[machine].acceptedCycles || "",
+            acceptanceCycles: data[machine].acceptedCycles || "",
             testReason: data[machine].testReason || "",
             load:
               data[machine].bendingMovement ??
@@ -171,7 +171,7 @@ function App() {
                     { key: "wheelCode", label: "Wheel Code" },
                     { key: "wheelSize", label: "Wheel Size" },
                     { key: "cycles", label: "No of Cycles" },
-                    { key: "acceptance Cycles", label: "Acceptance Cycles" },
+                    { key: "acceptanceCycles", label: "Acceptance Cycles" },
                     { key: "load", label: loadLabel },
                     { key: "testReason", label: "Test Reason" },
                   ].map((f) => (
