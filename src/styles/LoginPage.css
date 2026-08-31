@@ -1,0 +1,931 @@
+/* ==========================================================================
+   Wheels India Limited — Industrial Dashboard Login
+   Global Reset & Base
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-color: #111111;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.app-root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111111;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+/* ==========================================================================
+   Intro Animation — matches the classes rendered by IntroAnimation.jsx
+   ========================================================================== */
+
+.intro-root {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+}
+
+.intro-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background-color: #000000;
+  opacity: 0;
+}
+
+.intro-center-group {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  pointer-events: none;
+}
+
+.intro-title-star {
+  width: 8px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  opacity: 0;
+}
+
+.intro-title-star::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 10px 3px rgba(255, 255, 255, 0.9),
+    0 0 30px 8px rgba(255, 255, 255, 0.5),
+    0 0 60px 16px rgba(140, 171, 88, 0.3);
+}
+
+.intro-star-flare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.intro-star-flare-v {
+  width: 1px;
+  height: 140px;
+  transform: translate(-50%, -50%);
+}
+
+.intro-beam {
+  width: 2px;
+  height: 200px;
+  margin-top: -22px;
+  margin-bottom: -22px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    #ffffff 25%,
+    #8cab58 50%,
+    #ffffff 75%,
+    transparent
+  );
+  box-shadow: 0 0 26px 4px rgba(140, 171, 88, 0.45);
+  opacity: 0;
+}
+
+.intro-title-text {
+  white-space: nowrap;
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #d9dade 40%, #f5f5f7 65%, #c7c9cc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
+  opacity: 0;
+}
+
+.comet-particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Login Page — Split Layout
+   ========================================================================== */
+
+.login-page {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111111;
+}
+
+.login-page-left {
+  width: 40%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+  padding: 60px 72px;
+  background-color: #111111;
+  position: relative;
+  z-index: 2;
+}
+
+.login-page-right {
+  width: 60%;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Logo
+   ========================================================================== */
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-image {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(140, 171, 88, 0.25));
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.logo-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.logo-subtitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  color: #8cab58;
+}
+
+.logo-tsf-image {
+  height: 42px;
+  width: auto;
+  opacity: 0.9;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Hero Text
+   ========================================================================== */
+
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-heading {
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 24px rgba(140, 171, 88, 0.12);
+}
+
+.hero-heading-accent {
+  color: #8cab58;
+}
+
+.hero-tagline {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: #b7b7b7;
+}
+
+/* ==========================================================================
+   Login Card — Glassmorphism
+   ========================================================================== */
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 36px;
+  border-radius: 20px;
+  background: rgba(26, 26, 26, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.login-card:hover {
+  border-color: rgba(140, 171, 88, 0.25);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(140, 171, 88, 0.08);
+}
+
+.login-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.login-card-subtitle {
+  font-size: 0.88rem;
+  color: #a0a0a0;
+  margin-top: -12px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #c8c8c8;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.input-field:focus-within {
+  border-color: #8cab58;
+  background: rgba(140, 171, 88, 0.06);
+  box-shadow: 0 0 0 3px rgba(140, 171, 88, 0.15);
+}
+
+.input-icon {
+  color: #8cab58;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.input-field input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.input-field input::placeholder {
+  color: #6e6e6e;
+}
+
+.eye-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0a0a0;
+  font-size: 1.05rem;
+  transition: color 0.25s ease;
+}
+
+.eye-toggle:hover {
+  color: #8cab58;
+}
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -4px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #c8c8c8;
+  cursor: pointer;
+  user-select: none;
+}
+
+.remember-me input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  display: inline-block;
+  position: relative;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.remember-me input:checked + .checkbox-custom {
+  background: #8cab58;
+  border-color: #8cab58;
+}
+
+.remember-me input:checked + .checkbox-custom::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #111111;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.forgot-password {
+  font-size: 0.85rem;
+  color: #8cab58;
+  transition: opacity 0.25s ease;
+}
+
+.forgot-password:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.login-button {
+  position: relative;
+  overflow: hidden;
+  margin-top: 6px;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #8cab58, #6f9040);
+  color: #111111;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: filter 0.25s ease;
+}
+
+.login-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.login-button:hover {
+  filter: brightness(1.08);
+}
+
+.login-button:hover::after {
+  transform: translateX(100%);
+}
+
+/* ==========================================================================
+   Right Side — Content Column (Innovation, Wheel)
+   ========================================================================== */
+
+.right-content-column {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Innovation Highlight
+   ========================================================================== */
+
+.innovation-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.innovation-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(216, 180, 254, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.innovation-badge-ring {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #a855f7 70%, transparent 100%);
+  box-shadow: 0 0 12px 3px rgba(168, 85, 247, 0.5);
+}
+
+.innovation-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.35;
+  color: #c084fc;
+  text-shadow: 0 0 18px rgba(168, 85, 247, 0.3);
+}
+
+.innovation-subtitle {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #e9d5ff;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.innovation-tags {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #9a9c9f;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+.innovation-dot {
+  color: #a855f7;
+  margin: 0 4px;
+}
+
+/* ==========================================================================
+   Right Side — Wheel Stage
+   ========================================================================== */
+
+.wheel-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.decorative-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.decorative-layer-visible {
+  opacity: 1;
+}
+
+.glow-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.glow-circle-primary {
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(168, 85, 247, 0) 70%);
+  filter: blur(10px);
+}
+
+.glow-circle-secondary {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(199, 201, 204, 0.18) 0%, rgba(199, 201, 204, 0) 70%);
+  top: 55%;
+  left: 60%;
+  filter: blur(20px);
+}
+
+.blur-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.blur-circle-one {
+  width: 260px;
+  height: 260px;
+  background: rgba(168, 85, 247, 0.22);
+  top: 12%;
+  left: 12%;
+}
+
+.blur-circle-two {
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.05);
+  bottom: 10%;
+  right: 16%;
+}
+
+.blur-circle-three {
+  width: 320px;
+  height: 320px;
+  background: rgba(199, 201, 204, 0.1);
+  bottom: -10%;
+  left: 30%;
+}
+
+.wheel-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -85px;
+}
+
+.wheel-spin-layer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-highlight-sweep {
+  position: absolute;
+  inset: -6%;
+  border-radius: 50%;
+  background: linear-gradient(120deg, transparent 35%, rgba(216, 180, 254, 0.35) 50%, transparent 65%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.wheel-image {
+  width: 480px;
+  height: 480px;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.6));
+  position: relative;
+}
+
+/* One-shot specular sweep — a real sibling element (see Wheel.jsx)
+   instead of a pseudo-element on <img>, which browsers never render
+   since replaced elements have no generated-content box. */
+.wheel-image-sweep {
+  position: absolute;
+  inset: -10%;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(168, 85, 247, 0.35) 48%,
+    rgba(255, 255, 255, 0.3) 52%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  animation: wheel-sweep 0.9s ease-out 1;
+}
+
+@keyframes wheel-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-40%);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(40%);
+  }
+}
+
+.load-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #a855f7 55%, #c7c9cc 100%);
+  box-shadow:
+    0 0 12px 3px rgba(168, 85, 247, 0.5),
+    0 0 16px 5px rgba(199, 201, 204, 0.3);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.load-point-active {
+  opacity: 1;
+  animation: load-point-pulse 7s ease-in-out infinite;
+}
+
+@keyframes load-point-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 12px 3px rgba(168, 85, 247, 0.5),
+      0 0 16px 5px rgba(199, 201, 204, 0.3);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 20px 6px rgba(168, 85, 247, 0.75),
+      0 0 26px 9px rgba(199, 201, 204, 0.5);
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}
+
+.product-testing-label {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  color: #d8b4fe;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.left-footer {
+  font-size: 0.75rem;
+  color: #6e6e6e;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   Responsive — Tablet
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-page-left,
+  .login-page-right {
+    width: 100%;
+  }
+
+  .login-page-left {
+    padding: 48px 40px;
+    min-height: auto;
+  }
+
+  .login-page-right {
+    min-height: 560px;
+    padding: 40px 0;
+  }
+
+  .wheel-image {
+    width: 340px;
+    height: 340px;
+  }
+
+  .wheel-wrapper {
+    margin-top: -50px;
+  }
+
+  .hero-heading {
+    font-size: 1.8rem;
+  }
+
+  .innovation-title {
+    font-size: 0.95rem;
+  }
+
+  .intro-title-text {
+    font-size: 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   Responsive — Mobile
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .login-page-left {
+    padding: 36px 22px;
+    gap: 26px;
+  }
+
+  .logo-title {
+    font-size: 1rem;
+  }
+
+  .logo-tsf-image {
+    height: 30px;
+  }
+
+  .hero-heading {
+    font-size: 1.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.88rem;
+  }
+
+  .login-card {
+    padding: 26px;
+    border-radius: 16px;
+  }
+
+  .login-page-right {
+    min-height: 480px;
+  }
+
+  .wheel-image {
+    width: 230px;
+    height: 230px;
+  }
+
+  .wheel-wrapper {
+    margin-top: -30px;
+  }
+
+  .glow-circle-primary {
+    width: 400px;
+    height: 400px;
+  }
+
+  .glow-circle-secondary {
+    width: 280px;
+    height: 280px;
+  }
+
+  .intro-title-text {
+    font-size: 1.05rem;
+  }
+
+  .intro-beam {
+    height: 130px;
+    margin-top: -14px;
+    margin-bottom: -14px;
+  }
+
+  .innovation-title {
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+  }
+
+  .innovation-tags {
+    font-size: 0.68rem;
+  }
+}
+
+.wheel-image {
+  opacity: 0;
+}
+
+.wheel-highlight-sweep {
+  opacity: 0;
+}
+/* ==========================================================================
+   Right Side — Industrial Machine Collage (behind the wheel)
+   ========================================================================== */
+
+.machine-collage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  filter: brightness(0.26) contrast(0.9) saturate(0.65) blur(0.4px);
+  mask-image: radial-gradient(circle at 55% 48%, black 0%, black 35%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle at 55% 48%, black 0%, black 35%, transparent 72%);
+}
+
+.machine-collage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 60% 45%,
+    rgba(168, 85, 247, 0.28) 0%,
+    rgba(17, 17, 17, 0.6) 70%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Single wrapper — one transform here scales/repositions the entire
+   four-image composition as one unit. Scale increased and overall
+   opacity nudged down slightly so the images extend past the visible
+   edge and read as an embedded background texture rather than four
+   individual photos. */
+.machine-collage-inner {
+  position: absolute;
+  inset: -10%;
+  transform: scale(1.22);
+  transform-origin: center center;
+  opacity: 0.9;
+}
+
+.machine-image {
+  position: absolute;
+  object-fit: cover;
+  opacity: 0.08;
+}
+
+.machine-image-rft {
+  top: 10%;
+  left: 14%;
+  width: 46%;
+  height: 46%;
+}
+
+.machine-image-cft {
+  top: 20%;
+  left: 34%;
+  width: 52%;
+  height: 52%;
+}
+
+.machine-image-cv {
+  top: 38%;
+  left: 16%;
+  width: 46%;
+  height: 46%;
+}
+
+.machine-image-lp {
+  top: 34%;
+  left: 40%;
+  width: 50%;
+  height: 50%;
+}
