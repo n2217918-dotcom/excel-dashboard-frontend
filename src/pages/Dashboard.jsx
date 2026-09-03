@@ -68,7 +68,7 @@ function Dashboard({ onLogout }) {
                 load:
                   data[machine].bendingMovement ??
                   data[machine].testLoad ??
-                  data[machine].testSpec ??   // ★ CHANGED: was data[machine].testspec (lowercase s) — now matches backend field name testSpec
+                  data[machine].testSpec ??   // ★ was data[machine].testspec (lowercase s) — matches backend field name testSpec
                   "",
               };
             });
@@ -128,14 +128,16 @@ function Dashboard({ onLogout }) {
             m.type === "CFT"
               ? "Bending Movement"
               : m.type === "BIAXIAL"
-              ? "Test Spec"   // ★ ADDED: BI AXIAL now labels this row "Test Spec" instead of "Test Load"
+              ? "Test Spec"   // ★ BI AXIAL labels this row "Test Spec" instead of "Test Load"
               : "Test Load";
 
           const cardData = machineInputs[m.name];
           const cardCyclesNum = parseFloat(cardData.cycles) || 0;
           const cardAcceptedNum = parseFloat(cardData.acceptanceCycles) || 0;
+          // ★ FIXED: flipped to show REMAINING % instead of completed %,
+          // and corrected the unbalanced-parentheses syntax error.
           const cardRawPercent =
-            cardAcceptedNum > 0 ? (cardCyclesNum / cardAcceptedNum) * 100 : 0;
+            cardAcceptedNum > 0 ? 100 - (cardCyclesNum / cardAcceptedNum) * 100 : 0;
           const cardClampedPercent = Math.min(Math.max(cardRawPercent, 0), 100);
           const cardPercentLabel = `${cardRawPercent.toFixed(1)}%`;
           const cardMiniRingOffset =
