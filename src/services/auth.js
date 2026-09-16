@@ -1,19 +1,34 @@
 // Centralized authentication logic. Any component that needs to log a
-// user in only ever calls this function — swapping in a real backend
-// call later means editing this one file, not every place that
-// currently checks a username/password.
+// user in only ever calls this function.
 //
-// Kept async/Promise-based on purpose, even though today's check is
-// synchronous — this is the shape a real fetch()-based login call
-// will already have, so callers won't need to change when this
-// function's internals eventually do.
+// CHANGED: this no longer checks a hardcoded username/password. It
+// now sends the entered credentials to the REAL backend, which is the
+// only place that should ever decide whether a login is valid.
+//
+// The backend responds with either:
+//   { success: true, token: "..." }   - correct credentials
+//   { success: false, message: "..." } - wrong credentials
+// This function passes that shape straight through, unchanged, so
+// LoginPage.jsx does not need to be rewritten for this change.
 
-const VALID_USERNAME = "wil";
-const VALID_PASSWORD = "WH#ee@LS&";
+import { API_BASE_URL } from "./api.js";
 
 export async function login(username, password) {
-  if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-    return { success: true };
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // Network failure, backend down, etc. - not a wrong password,
+    // but the caller (LoginPage) treats any non-success result the
+    // same way: show the message, stay on the login screen.
+    return { success: false, message: "Could not reach the server. Please try again." };
   }
-  return { success: false, message: "Invalid credentials" };
 }

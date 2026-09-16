@@ -3,12 +3,15 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // CHANGED: instead of a plain true/false, we now store the actual
+  // JWT token. "Logged in" is now defined as "we have a token" -
+  // token === null means logged out, a real string means logged in.
+  const [token, setToken] = useState(null);
 
-  return loggedIn ? (
-    <Dashboard onLogout={() => setLoggedIn(false)} />
+  return token ? (
+    <Dashboard token={token} onLogout={() => setToken(null)} />
   ) : (
-    <LoginPage onLogin={() => setLoggedIn(true)} />
+    <LoginPage onLogin={(newToken) => setToken(newToken)} />
   );
 }
 

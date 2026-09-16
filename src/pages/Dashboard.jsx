@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../services/api.js";
 
-function Dashboard({ onLogout }) {
+function Dashboard({ token, onLogout }) {
   /* ================= MACHINE STATE ================= */
   const [machineInputs, setMachineInputs] = useState({
     "CFT-1": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
@@ -17,6 +18,10 @@ function Dashboard({ onLogout }) {
     "BI AXIAL-CV": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
     "BI AXIAL-LP": { wheelCode: "", wheelSize: "", cycles: "", acceptanceCycles: "", load: "", testReason: "" },
   });
+
+  // NEW: visible feedback for the user, instead of failures only
+  // showing up silently in the browser console.
+  const [loadError, setLoadError] = useState("");
 
   /* ================= MACHINE CONFIG ================= */
   const machines = [
@@ -49,9 +54,30 @@ function Dashboard({ onLogout }) {
   /* ================= FETCH BACKEND ================= */
   useEffect(() => {
     const fetchData = () => {
-      fetch("https://excel-dashboard-backend-q2nl.onrender.com/api/dashboard-data")
-        .then((res) => res.json())
+      // CHANGED: the token is now sent on every request, in the
+      // Authorization header, in the exact format the backend's
+      // requireLogin middleware expects: "Bearer <token>".
+      fetch(`${API_BASE_URL}/api/dashboard-data`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          // CHANGED: if the token was rejected (expired, invalid),
+          // the backend sends back status 401. We catch that
+          // specifically and log the user out, sending them back to
+          // the login screen, instead of silently failing forever.
+          if (res.status === 401) {
+            if (onLogout) onLogout();
+            throw new Error("Session expired. Please log in again.");
+          }
+          if (!res.ok) {
+            throw new Error("Server responded with an error.");
+          }
+          return res.json();
+        })
         .then((data) => {
+          setLoadError("");
           setMachineInputs((prev) => {
             const updated = { ...prev };
 
@@ -68,7 +94,7 @@ function Dashboard({ onLogout }) {
                 load:
                   data[machine].bendingMovement ??
                   data[machine].testLoad ??
-                  data[machine].testSpec ??   // ★ was data[machine].testspec (lowercase s) — matches backend field name testSpec
+                  data[machine].testSpec ??
                   "",
               };
             });
@@ -76,17 +102,19 @@ function Dashboard({ onLogout }) {
             return updated;
           });
         })
-        .catch((err) => console.error("Backend error:", err));
+        .catch((err) => {
+          // CHANGED: errors are now shown to the user, not just
+          // logged to the console where nobody but a developer would
+          // ever see them.
+          console.error("Backend error:", err);
+          setLoadError(err.message || "Could not load dashboard data.");
+        });
     };
 
-    // Initial fetch
     fetchData();
-
-    // Auto-refresh every 45 seconds
     const interval = setInterval(fetchData, 45000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [token, onLogout]);
 
   /* ================= DATE ================= */
   const today = new Date();
@@ -96,15 +124,10 @@ function Dashboard({ onLogout }) {
     "/" +
     String(today.getMonth() + 1).padStart(2, "0") +
     "/" +
-    String(today.getFullYear())
-   /* ================= TIME ================= */
-    const timeOnly = new Date().toLocaleTimeString();
-    console.log(timeOnly);
+    String(today.getFullYear());
 
-  /* ================= MINI CORNER PROGRESS RING (all cards) =================
-     Shared radius/circumference constants — the actual percent is
-     computed per-machine inside the .map() below, from that machine's
-     own cycles/acceptanceCycles, so every card gets its own value. */
+  const timeOnly = new Date().toLocaleTimeString();
+
   const miniRingRadius = 18;
   const miniRingCircumference = 2 * Math.PI * miniRingRadius;
 
@@ -122,20 +145,23 @@ function Dashboard({ onLogout }) {
         PRODUCT TESTING LIVE DATA - {formattedDate} - {timeOnly}
       </div>
 
+      {/* NEW: visible error banner, only shown if something failed */}
+      {loadError && (
+        <div style={styles.errorBanner}>{loadError}</div>
+      )}
+
       <div style={styles.grid}>
         {machines.map((m) => {
           const loadLabel =
             m.type === "CFT"
               ? "Bending Movement"
               : m.type === "BIAXIAL"
-              ? "Test Spec"   // ★ BI AXIAL labels this row "Test Spec" instead of "Test Load"
+              ? "Test Spec"
               : "Test Load";
 
           const cardData = machineInputs[m.name];
           const cardCyclesNum = parseFloat(cardData.cycles) || 0;
           const cardAcceptedNum = parseFloat(cardData.acceptanceCycles) || 0;
-          // ★ FIXED: flipped to show REMAINING % instead of completed %,
-          // and corrected the unbalanced-parentheses syntax error.
           const cardRawPercent =
             cardAcceptedNum > 0 ? 100 - (cardCyclesNum / cardAcceptedNum) * 100 : 0;
           const cardClampedPercent = Math.min(Math.max(cardRawPercent, 0), 100);
@@ -242,6 +268,15 @@ const styles = {
     fontSize: 20,
     marginBottom: 20,
   },
+  errorBanner: {
+    background: "#fee2e2",
+    color: "#b91c1c",
+    padding: "10px 16px",
+    borderRadius: 8,
+    marginBottom: 16,
+    textAlign: "center",
+    fontSize: 14,
+  },
   grid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 },
   card: {
     background: "white",
@@ -261,7 +296,6 @@ const styles = {
   machineName: { fontWeight: "bold", fontSize: 14.3, textAlign: "center", color: "#111827" },
   sub: { fontSize: 12.1, color: "#2563eb", textAlign: "center" },
 
-  /* ---- Mini corner progress ring badge (all cards) ---- */
   miniRingBadge: {
     position: "absolute",
     top: 10,
