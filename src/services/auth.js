@@ -24,6 +24,7 @@ export async function login(username, password) {
     });
 
     const data = await response.json();
+    console.log("LOGIN RESPONSE:", data);
     return data;
   } catch (error) {
     // Network failure, backend down, etc. - not a wrong password,

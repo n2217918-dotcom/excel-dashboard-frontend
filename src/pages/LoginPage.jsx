@@ -22,9 +22,6 @@ function LoginPage({ onLogin }) {
   const footerRef = useRef(null);
   const wheelRef = useRef(null);
 
-  // Stable across re-renders — this is what stops IntroAnimation's
-  // gsap.context effect from re-running every time LoginPage re-renders
-  // (e.g. when wakeStage changes mid-sequence).
   const handleStarAttached = useCallback((index) => {
     setAttachedPoints((prev) => {
       const next = [...prev];
@@ -38,16 +35,16 @@ function LoginPage({ onLogin }) {
     setRotating(true);
   }, []);
 
-  // LoginForm only reports { username, password, rememberMe } — the
-  // actual credential check lives in services/auth.js, so this is the
-  // one place that decides what "logged in" means.
+  // CHANGED: login() now returns { success, token, message } instead
+  // of just { success, message }. On success, we pass the REAL token
+  // up to App.jsx, instead of calling onLogin() with no arguments.
   const handleCredentialsSubmit = useCallback(
     async ({ username, password }) => {
       const result = await login(username, password);
 
       if (result.success) {
         setLoginError("");
-        if (onLogin) onLogin();
+        if (onLogin) onLogin(result.token);
       } else {
         setLoginError(result.message || "Invalid credentials");
       }
