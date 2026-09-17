@@ -344,6 +344,28 @@ input {
   color: #6e6e6e;
 }
 
+/* ---------------------------------------------------------------------
+   Autofill override — Chrome/Edge force a white (or pale) background
+   on inputs they recognize as saved login fields, which breaks the
+   dark theme. background-color can't be overridden directly on
+   autofilled inputs (browsers block it), so a large inset box-shadow
+   in the same color as the input's own background is used to visually
+   cover it instead. border-radius is repeated here because the
+   shadow is painted on the <input> itself, not on .input-field, so
+   without it the shadow's square corners would poke past the rounded
+   .input-field container.
+   --------------------------------------------------------------------- */
+.input-field input:-webkit-autofill,
+.input-field input:-webkit-autofill:hover,
+.input-field input:-webkit-autofill:focus,
+.input-field input:-webkit-autofill:active {
+  border-radius: 12px;
+  -webkit-box-shadow: 0 0 0 1000px rgba(28, 27, 25, 1) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .eye-toggle {
   display: flex;
   align-items: center;
